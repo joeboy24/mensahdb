@@ -85,7 +85,7 @@ class GeneralController extends Controller
     public function getContacts() {
         $where = ['subscription' => 'yes', 'del' => 'no'];
         // $select = ['fname','sname','phone','email','subscription','del']; select($select)->
-        $contacts = Contact::where($where)->distinct('phone')->get();
+        $contacts = Contact::where($where)->distinct('phone')->orderBy('fname', 'ASC')->get();
 
         // return $contacts;
 
@@ -95,16 +95,18 @@ class GeneralController extends Controller
         ], 200);
     }
 
-    public function addContacts (Request $request, $res) {
-        
+    public function importContacts (Request $request) {
+        $hold = [];
         // return $res;
         try{
 
+            $hold = array($request[2]);
             // $ticket->admitted = $request->admitted;
             // $ticket->save();
 
             return response()->json([
-                'feedback' => $request[2],
+                'feedback' => $hold[0],
+                // 'feedback' => $request[2],
                 // 'message' => "Admission Successful"
             ], 200);
 
@@ -145,7 +147,7 @@ class GeneralController extends Controller
     public function updateContact (Request $request, $id) {
         
         $contact = Contact::find($id);
-        if (!$ticket) {
+        if (!$contact) {
             return response()->json([
                 'message' => 'Oops..! Contact not found'
             ], 404);
@@ -157,7 +159,7 @@ class GeneralController extends Controller
             $contact->phone = $request->phone;
             $contact->email = $request->email;
             $contact->subscription = $request->subscription;
-            $contact->del = $request->admitted;
+            $contact->del = $request->del;
             $contact->save();
 
             return response()->json([
@@ -177,25 +179,29 @@ class GeneralController extends Controller
 
 
 
-    public function ReminderMailFunc(Request $request, $msg) {
+    public function ReminderMailFunc(Request $request, $id) {
+        // return view('mail.event_notice');
+        // // $data = json_decode($request);
+        // Session::put('mailTo', $request);
+        // Session::put('mailMsg', $msg);
+        // // $data = json_decode($request[0]);
         Session::put('mailTo', $request);
-        Session::put('mailMsg', $msg);
-        // $data = json_decode($request);
-        // $data = json_decode($request[0]);
+        Session::put('mailMsg', $request->new);
         try {
-            // foreach ($request as $item) {
+            // // foreach ($request as $item) {
                 Mail::to($request->email)->send(new ReminderMail);
-            //     $a = $item->email;
-            // }
+            // //     $a = $item->email;
+            // // }
             return response()->json([
                 'result' => 'Accepted',
-                'value' => 'Sent to '.$request->email
+                'value' => 'Email sent to '.$request->fname
             ], 200);
 
         } catch (\Throwable $th) {
             $err = $th->getMessage();
             return response()->json([
-                'value' => 'Not sent to '.$request->mail,
+                'value' => 'Not sent',
+                // 'value' => 'Not sent to '.$request->mail,
                 // 'message' => 'Error Accepting..! '.$err
             ], 404);
         }

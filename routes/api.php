@@ -21,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route::get('/', ['middleware' => ['ipcheck'], function () {
+//     // your routes here
+// }]);
+
 Route::resource('/users', UserController::class);
 
 // Ticket
@@ -32,6 +36,7 @@ Route::put('/putticket/{id}', [GeneralController::class, 'updateTicket']);
 // Contact
 Route::get('/contacts', [GeneralController::class, 'getContacts']);
 Route::post('/addcontact', [GeneralController::class, 'addcontact']);
+Route::post('/importContacts', [GeneralController::class, 'importContacts']);
 Route::put('/putcontact/{id}', [GeneralController::class, 'updateContact']);
 
 // Mail

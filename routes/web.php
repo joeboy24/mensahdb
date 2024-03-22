@@ -17,12 +17,18 @@ use App\Http\Controllers\TicketController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'Oops..! Nothing here to display';
+    // return view('welcome');
+});
+
+Route::get('/unsubscribe', function () {
+    return view('unsubscribe');
+    // return view('welcome');
 });
 Route::get('/sendmail', [GeneralController::class, 'ReminderMailFunc']);
-Route::get('/putcontact/{id}', [GeneralController::class, 'addContacts']);
-Route::get('/contacts', [GeneralController::class, 'getContacts']);
-Route::resource('/tickets', TicketController::class);
+// Route::get('/putcontact/{id}', [GeneralController::class, 'addContacts']);
+// Route::get('/contacts', [GeneralController::class, 'getContacts']);
+// Route::resource('/tickets', TicketController::class);
 
 // Route::resource('/users', UserController::class);
 // Route::get('/users/{id}', [UserController::class, 'show']);

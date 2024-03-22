@@ -89,22 +89,16 @@
     <body>
         <div class="all">
             <div class="mail-body">
-                <h2>HayEvents</h2>
+                <h2>Promoplux</h2>
                 <h6 class="slogan">Serving you with the best</h6>
                 <p>&nbsp;</p>
                 <div class="mail-text">
-                    <p>Hello {{session('mailTo')->fname}},</p>
-                    <p>{!! session('mailMsg') !!}</p>
-                    {{-- <p>23413 5265</p>
-                    <p>adf adsfsdgfdga fg afgf</p> --}}
-                    {{-- <p>{{session('mailMsg')}}</p> --}}
-                    {{-- <p>This is just a short reminder or our upcoming event. Kindly find event details below.</p> --}}
-                    <p>Regards, <br>HayEvents Team</p>
+                    <p>Sad to see you go..!</p>
                 </div>
                 <p>&nbsp;</p>
             </div>
             <div class="unsubscribe">
-                <p>Click <a href="https://mensahdb.pivoapps.net">Here</a> to unsubscribe</p>
+                <p>Click <a href="https://mensahlive.pivoapps.net">Here</a> to go back</p>
                 <div class="pivo_logo">
                     <a href="#">
                         <p>Powered by PivoApps</p>
