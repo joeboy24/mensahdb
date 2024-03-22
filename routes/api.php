@@ -25,20 +25,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     // your routes here
 // }]);
 
-Route::resource('/users', UserController::class);
+Route::resource('/users', UserController::class)->middleware('Cors');
 
 // Ticket
 // Route::resource('/tickets', TicketController::class);
-Route::get('/gettickets/{id}', [GeneralController::class, 'getTickets']);
-Route::post('/addticket', [GeneralController::class, 'addTicket']);
-Route::put('/putticket/{id}', [GeneralController::class, 'updateTicket']);
+Route::get('/gettickets/{id}', [GeneralController::class, 'getTickets'])->middleware('Cors');
+Route::post('/addticket', [GeneralController::class, 'addTicket'])->middleware('Cors');
+Route::put('/putticket/{id}', [GeneralController::class, 'updateTicket'])->middleware('Cors');
 
 // Contact
-Route::get('/contacts', [GeneralController::class, 'getContacts']);
-Route::post('/addcontact', [GeneralController::class, 'addcontact']);
-Route::post('/importContacts', [GeneralController::class, 'importContacts']);
-Route::put('/putcontact/{id}', [GeneralController::class, 'updateContact']);
+Route::get('/contacts', [GeneralController::class, 'getContacts'])->middleware('Cors');
+Route::post('/addcontact', [GeneralController::class, 'addcontact'])->middleware('Cors');
+Route::post('/importContacts', [GeneralController::class, 'importContacts'])->middleware('Cors');
+Route::put('/putcontact/{id}', [GeneralController::class, 'updateContact'])->middleware('Cors');
 
 // Mail
-Route::put('/sendmail/{id}', [GeneralController::class, 'ReminderMailFunc']);
+Route::put('/sendmail/{id}', [GeneralController::class, 'ReminderMailFunc'])->middleware('Cors');
 
