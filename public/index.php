@@ -5,6 +5,12 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// header('Access-Control-Allow-Origin: http://localhost:3000');
+// header('Access-Control-Allow-Methods: GET, PUT, POST, OPTIONS, post, get');
+// header("Access-Control-Max-Age", "20000");
+// header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+// header("Access-Control-Allow-Credentials", "true");
+
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance

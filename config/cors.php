@@ -21,7 +21,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['mensahlive.pivoapps.net'],
+    'allowed_origins' => ['http://mensahlive.pivoapps.net', 'https://mensahlive.pivoapps.net'],
 
     'allowed_origins_patterns' => ["*pivoapps.net*", "*mensahlive.pivoapps.net*"],
 
@@ -29,7 +29,7 @@ return [
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 20000,
 
     'supports_credentials' => true,
 
