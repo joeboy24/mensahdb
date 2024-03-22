@@ -21,7 +21,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [],
+    'allowed_origins' => ['mensahlive.pivoapps.net'],
 
     'allowed_origins_patterns' => ["*pivoapps.net*", "*mensahlive.pivoapps.net*"],
 
