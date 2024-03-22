@@ -89,7 +89,7 @@
     <body>
         <div class="all">
             <div class="mail-body">
-                <h2>HayEvents</h2>
+                <h2>Promoplux</h2>
                 <h6 class="slogan">Serving you with the best</h6>
                 <p>&nbsp;</p>
                 <div class="mail-text">
@@ -99,7 +99,7 @@
                     <p>adf adsfsdgfdga fg afgf</p> --}}
                     {{-- <p>{{session('mailMsg')}}</p> --}}
                     {{-- <p>This is just a short reminder or our upcoming event. Kindly find event details below.</p> --}}
-                    <p>Regards, <br>HayEvents Team</p>
+                    <p>Regards, <br>Promoplux Team</p>
                 </div>
                 <p>&nbsp;</p>
             </div>
