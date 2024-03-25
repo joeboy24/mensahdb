@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,9 @@ Route::get('/unsubscribe', function () {
     return view('unsubscribe');
     // return view('welcome');
 });
+Route::resource('/tickets', ContactController::class);
 Route::get('/sendmail', [GeneralController::class, 'ReminderMailFunc']);
+Route::put('/unsubscribe/{id}', [GeneralController::class, 'unsubscribe']);
 // Route::get('/putcontact/{id}', [GeneralController::class, 'addContacts']);
 // Route::get('/contacts', [GeneralController::class, 'getContacts']);
 // Route::resource('/tickets', TicketController::class);

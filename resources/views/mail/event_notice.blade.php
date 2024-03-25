@@ -104,7 +104,8 @@
                 <p>&nbsp;</p>
             </div>
             <div class="unsubscribe">
-                <p>Click <a href="https://mensahdb.pivoapps.net">Here</a> to unsubscribe</p>
+                {{-- /{{session('mailTo')->id}} --}}
+                <p>Click <a href="https://mensahdb.pivoapps.net/unsubscribe">Here</a> to unsubscribe</p>
                 <div class="pivo_logo">
                     <a href="#">
                         <p>Powered by PivoApps</p>

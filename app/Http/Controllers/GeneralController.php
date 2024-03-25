@@ -179,6 +179,17 @@ class GeneralController extends Controller
 
 
 
+    
+    public function unsubscribe(Request $request, $id) {
+        $contact = Contact::find($id);
+        if ($contact) {
+            $contact->subscription = 'no';
+            $contact->save();
+        }
+        return view('unsubscribe');
+    }
+
+
     public function ReminderMailFunc(Request $request, $id) {
         // return view('mail.event_notice');
         // // $data = json_decode($request);
