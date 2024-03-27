@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('fname');
             $table->string('sname')->nullable();
             $table->string('phone')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('subscription')->default('yes');
             $table->string('del')->default('no');
             $table->timestamps();

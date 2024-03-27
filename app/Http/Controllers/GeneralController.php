@@ -120,17 +120,40 @@ class GeneralController extends Controller
 
     public function addContact(Request $request) {
 
-        $search = Contact::where('email', $request->email)->orWhere('phone', $request->phone)->first();
+        // if ($request->email != '' || $request->email != null) {
+        //     $search = Contact::where('email', $request->email)->first();
+        // }
+
+        // if ($request->phone != '' || $request->phone != null) {
+        //     $search2 = Contact::where('phone', $request->phone)->first();
+        // }
+
+        $C = $request->phone;
+        if (substr($C, 0, 1) == '+') {
+            $C = str_replace('+', '', $C);
+        }
+        if (substr($C, 0, 3) == '233') {
+            $C = str_replace('233', '0', $C);
+        }
+        if (substr($C, 0, 4) == '+233') {
+            $C = str_replace('+233', '0', $C);
+        }
         
         try {
-            if (!$search) {
+            // if (!$search && !$search2) {
+                // if ($request->fname == '') {
+                //     $fname = 'Sir/Madam';
+                // }
+                // if ($request->sname == '') {
+                //     $sname = '';
+                // }
                 $add_ticket = Contact::firstOrCreate([
                     'fname' => $request->fname,
                     'sname' => $request->sname,
-                    'phone' => $request->phone,
+                    'phone' => $C,
                     'email' => $request->email,
                 ]);
-            }
+            // }
             
             return response()->json([
                 'result' => 'Contact Added'
