@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ContactController;
+use App\Models\Contact;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,20 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
+Route::get('/addnewphones', [GeneralController::class, 'PhonesUploadFunc']);
+
 Route::get('/unsubscribe', function () {
-    return view('unsubscribe');
-    // return view('welcome');
+    $contacts = Contact::all();
+    foreach ($contacts as $item) {
+        $C = str_replace(' ', '', $item->phone);
+        $C = str_replace('(', '', $C);
+        $C = str_replace(')', '', $C);
+        $item->phone = $C;
+        $item->save();
+    }
+    return 'Done..!';
+    // return view('unsubscribe');
+    // // return view('welcome');
 });
 Route::resource('/tickets', ContactController::class);
 Route::get('/sendmail', [GeneralController::class, 'ReminderMailFunc']);

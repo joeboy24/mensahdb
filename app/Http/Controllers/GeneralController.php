@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PHone;
 use App\Models\Ticket;
 use App\Models\Contact;
 use App\Mail\ReminderMail;
@@ -124,9 +125,11 @@ class GeneralController extends Controller
         //     $search = Contact::where('email', $request->email)->first();
         // }
 
-        // if ($request->phone != '' || $request->phone != null) {
-        //     $search2 = Contact::where('phone', $request->phone)->first();
-        // }
+        // beyk yswe xkcq xblb
+
+        if ($request->phone != '' || $request->phone != null && $request->phone != 'Empty') {
+            $search2 = Contact::where('phone', $request->phone)->first();
+        }
 
         $C = $request->phone;
         if (substr($C, 0, 1) == '+') {
@@ -140,7 +143,7 @@ class GeneralController extends Controller
         }
         
         try {
-            // if (!$search && !$search2) {
+            if (!$search2) {
                 // if ($request->fname == '') {
                 //     $fname = 'Sir/Madam';
                 // }
@@ -148,12 +151,16 @@ class GeneralController extends Controller
                 //     $sname = '';
                 // }
                 $add_ticket = Contact::firstOrCreate([
+                    // 'fname' => 'Empty',
+                    // 'sname' => 'Empty',
+                    // 'phone' => $C,
+                    // 'email' => 'Empty',
                     'fname' => $request->fname,
                     'sname' => $request->sname,
                     'phone' => $C,
                     'email' => $request->email,
                 ]);
-            // }
+            }
             
             return response()->json([
                 'result' => 'Contact Added'
@@ -214,6 +221,42 @@ class GeneralController extends Controller
 
 
     public function ReminderMailFunc(Request $request, $id) {
+        // // return view('mail.event_notice');
+        // // // $data = json_decode($request);
+        // Session::put('mailTo', $request);
+        // Session::put('mailMsg', $request->new);
+
+        // Session::put('mailTo', $request[0]);
+        // Session::put('mailMsg', $request->new);
+
+        // $send = [
+        //     'mailTo' => $request[0],
+        //     'mailMsg' => $request->new
+        // ];
+        // return view('unsubscribe')->with($send);
+        try {
+            // if ($request->email != '' || $request->email != null) {
+            //     # code...
+            //     Mail::to($request->email)->send(new ReminderMail);
+            // }
+            return response()->json([
+                'result' => 'Accepted '.$id,
+                'value' => 'Email sent to '.$request->ex
+            ], 200);
+
+        } catch (\Throwable $th) {
+            $err = $th->getMessage();
+            return response()->json([
+                'value' => 'Not sent',
+                // 'value' => 'Not sent to '.$request->mail,
+                // 'message' => 'Error Accepting..! '.$err
+            ], 404);
+        }
+
+    }
+
+
+    public function ReminderMailFunc2(Request $request, $id) {
         // return view('mail.event_notice');
         // // $data = json_decode($request);
         // Session::put('mailTo', $request);
@@ -223,7 +266,10 @@ class GeneralController extends Controller
         Session::put('mailMsg', $request->new);
         try {
             // // foreach ($request as $item) {
-                Mail::to($request->email)->send(new ReminderMail);
+                if ($request->email != '' || $request->email != null) {
+                    # code...
+                    Mail::to($request->email)->send(new ReminderMail);
+                }
             // //     $a = $item->email;
             // // }
             return response()->json([
@@ -240,13 +286,27 @@ class GeneralController extends Controller
             ], 404);
         }
 
-        // $mail_aray = [
-        //     'durogh24@gmail.com', 
-        //     // 'joeboy24.jb@gmail.com'
-        // ];
-        // foreach ($mail_aray as $item) {
-        //     Mail::to($item)->send(new ReminderMail);
-        // }
-        // return 'Done..!';
     }
+
+
+    public function PhonesUploadFunc() {
+        $phones = Phone::all();
+
+        foreach ($phones as $item) {
+            # code...
+            $find = Contact::where('phone', $item->phone)->latest()->first();
+            if (!$find) {
+                # code...
+                // return $find;
+                $insert = Contact::firstOrCreate([
+                    'fname' => $item->fname,
+                    'sname' => $item->sname,
+                    'phone' => $item->phone,
+                    'email' => $item->email,
+                ]);
+            }
+        }
+        return 'Done..!';
+    }
+
 }

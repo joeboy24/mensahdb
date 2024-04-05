@@ -89,8 +89,8 @@
     <body>
         <div class="all">
             <div class="mail-body">
-                <h2>Promoplux</h2>
-                <h6 class="slogan">Serving you with the best</h6>
+                <h2>Soho Friday</h2>
+                <h6 class="slogan">Event Reminder..!</h6>
                 <p>&nbsp;</p>
                 <div class="mail-text">
                     <p>Hello {{session('mailTo')->fname}},</p>
@@ -99,7 +99,8 @@
                     <p>adf adsfsdgfdga fg afgf</p> --}}
                     {{-- <p>{{session('mailMsg')}}</p> --}}
                     {{-- <p>This is just a short reminder or our upcoming event. Kindly find event details below.</p> --}}
-                    <p>Regards, <br>Promoplux Team</p>
+                    <p>Best Regards</p>
+                    {{-- <p>Regards, <br>Promoplux Team</p> --}}
                 </div>
                 <p>&nbsp;</p>
             </div>

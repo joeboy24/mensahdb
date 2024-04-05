@@ -93,6 +93,8 @@
                 <h6 class="slogan">Serving you with the best</h6>
                 <p>&nbsp;</p>
                 <div class="mail-text">
+                    <p>{{session('mailTo')[0]->fname.' / '.session('mailTo')[0]->email}}</p>
+                    {{-- <p>{{$mailTo[0]->fname.' / '.$mailTo[0]->email}}</p> --}}
                     <p>Sad to see you go..!</p>
                 </div>
                 <p>&nbsp;</p>
