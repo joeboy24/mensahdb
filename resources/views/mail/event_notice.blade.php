@@ -93,7 +93,8 @@
                 <h6 class="slogan">Event Reminder..!</h6>
                 <p>&nbsp;</p>
                 <div class="mail-text">
-                    <p>Hello {{session('mailTo')->fname}},</p>
+                    <p>Hello {{session('mailTo')}},</p>
+                    {{-- <p>Hi Sir/Madam,</p> --}}
                     <p>{!! session('mailMsg') !!}</p>
                     {{-- <p>23413 5265</p>
                     <p>adf adsfsdgfdga fg afgf</p> --}}

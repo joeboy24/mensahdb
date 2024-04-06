@@ -221,35 +221,39 @@ class GeneralController extends Controller
 
 
     public function ReminderMailFunc(Request $request, $id) {
-        // // return view('mail.event_notice');
-        // // // $data = json_decode($request);
+        
         // Session::put('mailTo', $request);
-        // Session::put('mailMsg', $request->new);
+        Session::put('mailMsg', $request->emailText);
+        $emails = '';
 
-        // Session::put('mailTo', $request[0]);
-        // Session::put('mailMsg', $request->new);
+        foreach ($request->emails as $item) {
+            $emails = $emails."'".$item."', ";
+        }
 
-        // $send = [
-        //     'mailTo' => $request[0],
-        //     'mailMsg' => $request->new
-        // ];
-        // return view('unsubscribe')->with($send);
         try {
-            // if ($request->email != '' || $request->email != null) {
-            //     # code...
-            //     Mail::to($request->email)->send(new ReminderMail);
-            // }
+            
+            if ($request->emails != '' || $request->emails != null) {
+                # code...
+                
+                for ($i=0; $i < count($request->emails); $i++) { 
+                    // $emails = $emails."'".$item."', ";
+                    Session::put('mailTo', $request->fnames[$i]);
+                    Mail::to($request->emails[$i])->send(new ReminderMail);
+                }
+            }
+
             return response()->json([
-                'result' => 'Accepted '.$id,
-                'value' => 'Email sent to '.$request->ex
+                'result' => 'Accepted',
+                'value' => "Email sent to ".$emails,
+                'value2' => "Email Text ".$request->emailText
+                // 'value' => 'Email sent to '.$request->fname,
+                // 'value2' => 'Email sent to '.$id
             ], 200);
 
         } catch (\Throwable $th) {
             $err = $th->getMessage();
             return response()->json([
-                'value' => 'Not sent',
-                // 'value' => 'Not sent to '.$request->mail,
-                // 'message' => 'Error Accepting..! '.$err
+                'value' => 'Not sent '.$th,
             ], 404);
         }
 
