@@ -232,13 +232,16 @@ class GeneralController extends Controller
 
         try {
             
-            if ($request->emails != '' || $request->emails != null) {
+            if ($request->emails != '' || $request->emails != null || $request->emails != 'Empty') {
                 # code...
                 
                 for ($i=0; $i < count($request->emails); $i++) { 
-                    // $emails = $emails."'".$item."', ";
-                    Session::put('mailTo', $request->fnames[$i]);
-                    Mail::to($request->emails[$i])->send(new ReminderMail);
+                        // $emails = $emails."'".$item."', ";
+
+                    if (str_contains($request->emails[$i], '@')) {
+                        Session::put('mailTo', $request->fnames[$i]);
+                        Mail::to($request->emails[$i])->send(new ReminderMail);
+                    }
                 }
             }
 
