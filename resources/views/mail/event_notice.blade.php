@@ -110,10 +110,12 @@
                     {{-- <p>Regards, <br>Promoplux Team</p> --}}
                 </div>
                 <p>&nbsp;</p>
-                <div class="flyerDiv">
-                    <img src={{ session('broadcastFlyer') }} alt="">
-                </div>
-                <p>&nbsp;</p>
+                @if (session('broadcastFlyer') != 'Null' || session('broadcastFlyer') != '' || empty(session('broadcastFlyer')))
+                    <div class="flyerDiv">
+                        <img src={{ session('broadcastFlyer') }} alt="">
+                    </div>
+                    <p>&nbsp;</p>
+                @endif
             </div>
             <div class="unsubscribe">
                 {{-- /{{session('mailTo')->id}} --}}
