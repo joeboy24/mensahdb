@@ -23,6 +23,7 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
+Route::get('/checks', [GeneralController::class, 'checks']);
 Route::get('/addnewphones', [GeneralController::class, 'PhonesUploadFunc']);
 
 Route::get('/unsubscribe', function () {

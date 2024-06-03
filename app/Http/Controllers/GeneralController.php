@@ -142,6 +142,12 @@ class GeneralController extends Controller
             $C = str_replace('+233', '0', $C);
         }
         
+        if (str_contains($request->email, ',')) {
+            $new_email = str_replace(',', '.', $ct->email);
+        }else {
+            $new_email = $request->email;
+        }
+
         try {
             if (!$search2) {
                 // if ($request->fname == '') {
@@ -158,7 +164,7 @@ class GeneralController extends Controller
                     'fname' => $request->fname,
                     'sname' => $request->sname,
                     'phone' => $C,
-                    'email' => $request->email,
+                    'email' => $new_email,
                 ]);
             }
             
@@ -220,7 +226,7 @@ class GeneralController extends Controller
     }
 
 
-    public function ReminderMailFunc(Request $request, $id) {
+    public function ReminderMailFunc3(Request $request, $id) {
         
         // Session::put('mailTo', $request);
         Session::put('mailMsg', $request->emailText);
@@ -230,69 +236,68 @@ class GeneralController extends Controller
             $emails = $emails."'".$item."', ";
         }
 
-        try {
-            
-            if ($request->emails != '' || $request->emails != null || $request->emails != 'Empty') {
-                # code...
+            try {
                 
-                for ($i=0; $i < count($request->emails); $i++) { 
-                        // $emails = $emails."'".$item."', ";
+                if ($request->emails != '' || $request->emails != null || $request->emails != 'Empty') {
 
-                    if (str_contains($request->emails[$i], '@')) {
-                        Session::put('mailTo', $request->fnames[$i]);
-                        Mail::to($request->emails[$i])->send(new ReminderMail);
+                    for ($i=0; $i < count($request->emails); $i++) { 
+
+                        if (str_contains($request->emails[$i], '@')) {
+                            Session::put('mailTo', $request->fnames[$i]);
+                            Mail::to($request->emails[$i])->send(new ReminderMail);
+                        }
                     }
                 }
+
+                return response()->json([
+                    'result' => 'Accepted',
+                    'value' => "Email sent to ".$emails,
+                    'value2' => "Email Text ".$request->emailText
+                ], 200);
+
+            } catch (\Throwable $th) {
+                $err = $th->getMessage();
+                return response()->json([
+                    'value' => 'Not sent '.$th,
+                ], 404);
             }
-
-            return response()->json([
-                'result' => 'Accepted',
-                'value' => "Email sent to ".$emails,
-                'value2' => "Email Text ".$request->emailText
-                // 'value' => 'Email sent to '.$request->fname,
-                // 'value2' => 'Email sent to '.$id
-            ], 200);
-
-        } catch (\Throwable $th) {
-            $err = $th->getMessage();
-            return response()->json([
-                'value' => 'Not sent '.$th,
-            ], 404);
-        }
 
     }
 
 
-    public function ReminderMailFunc2(Request $request, $id) {
-        // return view('mail.event_notice');
-        // // $data = json_decode($request);
-        // Session::put('mailTo', $request);
-        // Session::put('mailMsg', $msg);
-        // // $data = json_decode($request[0]);
-        Session::put('mailTo', $request);
-        Session::put('mailMsg', $request->new);
+    public function ReminderMailFunc(Request $request, $id) {
+         
+         // Session::put('mailTo', $request);
+         Session::put('mailMsg', $request->emailText);
+         Session::put('broadcastFlyer', $request->broadcastFlyer);
+         $emails = [];
+ 
+        // foreach ($request->emails as $item) {
+        //     // $emails = $emails."'".$item."', ";
+        //     array_push($emails, $item->email);
+        // }
+
+        for ($i=0; $i < count($request->emails); $i++) { 
+            array_push($emails, $request->emails[$i]);
+        }
+ 
         try {
-            // // foreach ($request as $item) {
-                if ($request->email != '' || $request->email != null) {
-                    # code...
-                    Mail::to($request->email)->send(new ReminderMail);
-                }
-            // //     $a = $item->email;
-            // // }
+
+            // $emails3 = ['joeboy24.jb@gmail.com', 'pivoapps.net@gmail.com'];
+            Mail::to($emails)->send(new ReminderMail);
+
             return response()->json([
                 'result' => 'Accepted',
-                'value' => 'Email sent to '.$request->fname
+                'value' => "Email sent to " . implode(', ', $emails),
+                'value2' => "Email Text " . $request->emailText
             ], 200);
 
         } catch (\Throwable $th) {
             $err = $th->getMessage();
             return response()->json([
-                'value' => 'Not sent',
-                // 'value' => 'Not sent to '.$request->mail,
-                // 'message' => 'Error Accepting..! '.$err
+                'value' => 'Not sent '.$err,
             ], 404);
         }
-
     }
 
 
@@ -316,4 +321,67 @@ class GeneralController extends Controller
         return 'Done..!';
     }
 
+
+    public function checks() {
+        $contacts = Contact::all();
+        // $emails = $contacts;
+        $emails = [];
+        // $emails2 = ['joeboy24.jb@gmail.com','durogh24@gmail.com','pivoapps.net@gmail.com'];
+
+        // $cts = Contact::where('email', 'LIKE', '%,%')->get();
+        // foreach ($cts as $ct) {
+        //     $ct->email = str_replace(',', '.', $ct->email);
+        //     $ct->save();
+        // }
+        // return $cts;
+
+        // for ($i=0; $i < 3; $i++) { 
+        //     array_push($emails, $emails2[$i]);
+        // }
+
+        foreach ($contacts as $item) {
+            if ($item->emails != '' || $item->emails != null || $item->emails != 'Empty') {
+                if (str_contains($item->email, '@')) {
+                    // $emails = $emails.$item->email.',';
+                    array_push($emails, $item->email);
+                }
+            }
+        }
+
+        // $selected_emails = array_slice($emails, 500, 100);
+
+        // Session::put('mailTo', '');
+        // try {
+        //     Mail::to($selected_emails)->send(new ReminderMail);
+        //     return 'Done..!';
+        // } catch (\Throwable $th) {
+        //     throw $th;
+        // }
+
+        $counts = 100;
+        while (count($emails) > 0) {
+            // Select the first 100 items from the array
+            if (count($emails) < 100) {
+                $counts = count($emails);
+            }
+            $selected_emails = array_slice($emails, 0, 100 );
+            try {
+                Mail::to($selected_emails)->send(new ReminderMail);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        
+            // Remove the selected emails from the original array
+            array_splice($emails, 0, count($selected_emails));
+        
+            // Output the selected emails
+            echo "Selected emails:\n";
+            print_r(count($selected_emails));
+        }
+                    
+        return $selected_emails;
+        return count($selected_emails);
+        return 'Done..!';
+
+    }
 }

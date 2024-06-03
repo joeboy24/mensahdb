@@ -35,8 +35,12 @@
                 background: #0c182c;
             }
 
-            .mail-text {
+            .mail-text, .flyerDiv {
                 padding: 0 20px;
+            }
+
+            .flyerDiv img {
+                width: 100%;
             }
 
             .unsubscribe {
@@ -93,15 +97,21 @@
                 <h6 class="slogan">Event Reminder..!</h6>
                 <p>&nbsp;</p>
                 <div class="mail-text">
-                    <p>Hello {{session('mailTo')}},</p>
+                    <p>Hello {{session('mailTo')}}Fam,</p>
                     {{-- <p>Hi Sir/Madam,</p> --}}
-                    <p>{!! session('mailMsg') !!}</p>
+                    <p>{!! session('mailMsg') !!}
+                        {{-- <p>Come have a good time with the Simply Irresistible train Today after the long week stress.</p><p><br></p><p>📆 3rd May 2024</p><p>📍SoHo (Marina Mall)</p><p>⏰7pm- 4am</p><p><br></p><p>Table Reservations: 0550188888/</p><p>0271000085</p> --}}
+                    </p>
                     {{-- <p>23413 5265</p>
                     <p>adf adsfsdgfdga fg afgf</p> --}}
                     {{-- <p>{{session('mailMsg')}}</p> --}}
                     {{-- <p>This is just a short reminder or our upcoming event. Kindly find event details below.</p> --}}
                     <p>Best Regards</p>
                     {{-- <p>Regards, <br>Promoplux Team</p> --}}
+                </div>
+                <p>&nbsp;</p>
+                <div class="flyerDiv">
+                    <img src={{ session('broadcastFlyer') }} alt="">
                 </div>
                 <p>&nbsp;</p>
             </div>
